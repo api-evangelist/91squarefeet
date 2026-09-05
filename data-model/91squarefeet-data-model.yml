@@ -1,0 +1,187 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  openapi/91squarefeet-content-api-openapi.yml plus the `_links` relations and id-reference fields observed on
+  live anonymous GETs against https://91squarefeet.com/wp-json/wp/v2/* on 2026-09-05.
+note: >-
+  91Squarefeet publishes no object reference. Every entity, field and edge below was read from the site's own
+  machine-readable route index or observed on a live response. Record counts come from the X-WP-Total header.
+entities:
+- name: Portfolio
+  description: A delivered fit-out project. The company's core public business object.
+  collection: /wp/v2/portfolio
+  id_field: id
+  id_type: integer
+  record_count_observed: 42
+  relationships:
+  - type: belongs_to
+    target: Media
+    via: featured_media
+    note: Project hero image.
+  - type: has_many
+    target: ClientCategory
+    via: client_category
+  - type: has_many
+    target: DisplayLocation
+    via: display_location
+  - type: has_many
+    target: MobileCategory
+    via: mobile_category
+- name: Client
+  description: A brand 91Squarefeet has delivered projects for.
+  collection: /wp/v2/client
+  id_field: id
+  id_type: integer
+  record_count_observed: 73
+  relationships:
+  - type: has_many
+    target: ClientCategory
+    via: client_category
+  - type: has_many
+    target: DisplayLocation
+    via: display_location
+  - type: has_many
+    target: MobileCategory
+    via: mobile_category
+- name: CaseStudy
+  description: A published client case study.
+  collection: /wp/v2/case_study
+  id_field: id
+  id_type: integer
+  record_count_observed: 3
+  relationships:
+  - type: belongs_to
+    target: Media
+    via: featured_media
+  - type: has_many
+    target: Category
+    via: categories
+- name: Property
+  description: A retail or office property record.
+  collection: /wp/v2/property
+  id_field: id
+  id_type: integer
+  record_count_observed: 26
+  relationships:
+  - type: has_many
+    target: PropertyLocation
+    via: property_location
+- name: Testimonial
+  description: A client testimonial.
+  collection: /wp/v2/testimonial
+  id_field: id
+  id_type: integer
+  record_count_observed: 8
+  relationships:
+  - type: belongs_to
+    target: Media
+    via: featured_media
+- name: PressRelease
+  description: A press release or media mention.
+  collection: /wp/v2/press_release
+  id_field: id
+  id_type: integer
+  record_count_observed: 16
+  relationships:
+  - type: belongs_to
+    target: Media
+    via: featured_media
+  - type: has_many
+    target: Category
+    via: categories
+- name: Post
+  description: A blog post.
+  collection: /wp/v2/posts
+  id_field: id
+  id_type: integer
+  record_count_observed: 39
+  relationships:
+  - type: belongs_to
+    target: User
+    via: author
+  - type: belongs_to
+    target: Media
+    via: featured_media
+  - type: has_many
+    target: Category
+    via: categories
+  - type: has_many
+    target: Tag
+    via: tags
+  - type: has_many
+    target: Comment
+    via: 'GET /wp/v2/comments?post={id}'
+- name: Page
+  description: A site page.
+  collection: /wp/v2/pages
+  id_field: id
+  id_type: integer
+  record_count_observed: 24
+  relationships:
+  - type: belongs_to
+    target: Page
+    via: parent
+  - type: belongs_to
+    target: User
+    via: author
+- name: Media
+  description: A media library item — project photography, video and documents.
+  collection: /wp/v2/media
+  id_field: id
+  id_type: integer
+  record_count_observed: 1105
+  relationships:
+  - type: belongs_to
+    target: User
+    via: author
+- name: User
+  description: A public author profile.
+  collection: /wp/v2/users
+  id_field: id
+  id_type: integer
+- name: Comment
+  description: A comment on a post.
+  collection: /wp/v2/comments
+  id_field: id
+  id_type: integer
+  relationships:
+  - type: belongs_to
+    target: Post
+    via: post
+  - type: belongs_to
+    target: Comment
+    via: parent
+- name: Category
+  description: Shared post/case-study/press-release taxonomy term.
+  collection: /wp/v2/categories
+  id_field: id
+  id_type: integer
+- name: Tag
+  description: Post tag term.
+  collection: /wp/v2/tags
+  id_field: id
+  id_type: integer
+- name: ClientCategory
+  description: Taxonomy of client categories, shared by Portfolio and Client.
+  collection: /wp/v2/client_category
+  id_field: id
+  id_type: integer
+- name: DisplayLocation
+  description: Taxonomy controlling where an item surfaces on the site, shared by Portfolio and Client.
+  collection: /wp/v2/display_location
+  id_field: id
+  id_type: integer
+- name: MobileCategory
+  description: Taxonomy of mobile display categories, shared by Portfolio and Client.
+  collection: /wp/v2/mobile_category
+  id_field: id
+  id_type: integer
+- name: PropertyLocation
+  description: Taxonomy of property locations.
+  collection: /wp/v2/property_location
+  id_field: id
+  id_type: integer
+id_prefixes: []
+id_note: >-
+  All identifiers are bare integers scoped to the site, with no type prefix — an id is only meaningful together
+  with its collection.

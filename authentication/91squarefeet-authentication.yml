@@ -1,0 +1,15 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/91squarefeet-content-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: 'WordPress Application Passwords (HTTP Basic). Required only for write operations
+    and the authenticated namespaces, which are not described in this document. Authorization
+    endpoint: https://91squarefeet.com/wp-admin/authorize-application.php'
+  sources:
+  - openapi/91squarefeet-content-api-openapi.yml

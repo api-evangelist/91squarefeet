@@ -1,0 +1,58 @@
+generated: '2026-09-05'
+method: probed
+source: live probes of /.well-known/* on every host this record knows
+note: >-
+  Every named path was probed on both the registrable domain and its www alias (www.91squarefeet.com and
+  91sqft.com both 301 to the apex). All returned HTTP 404 with the site's WordPress 404 HTML page — no
+  well-known document is served. NO WellKnown or SecurityTxt pointer is emitted in apis.yml, because this
+  file records an absence, not a presence. There are no other hosts to probe: api., docs., developer. and
+  app. subdomains of 91squarefeet.com do not resolve, and the single OpenAPI servers[] host is the apex.
+hosts:
+- host: 91squarefeet.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: www.91squarefeet.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+unresolved_hosts:
+- host: api.91squarefeet.com
+  result: NXDOMAIN
+- host: docs.91squarefeet.com
+  result: NXDOMAIN
+- host: developer.91squarefeet.com
+  result: NXDOMAIN
+- host: app.91squarefeet.com
+  result: NXDOMAIN
+served_documents_found: 0
+checked: '2026-09-05'

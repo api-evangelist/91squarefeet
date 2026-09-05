@@ -1,0 +1,40 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  Registry searches on npm (registry.npmjs.org search API), PyPI, RubyGems, crates.io and Packagist for
+  "91squarefeet" and "91sqft", plus a search for a 91Squarefeet GitHub organization, on 2026-09-05.
+package_count: 0
+official_package_count: 0
+note: >-
+  No first-party client library, SDK or CLI exists in any public registry, and 91Squarefeet operates no public
+  GitHub organization. Nothing was found to derive candidates from either — apis.yml carries no SDK, CLI or
+  SourceCode link because the company publishes none. NO SDKs pointer is emitted in apis.yml, because there is
+  no SDK to point at.
+packages: []
+registries_searched:
+- registry: npm
+  query: '91squarefeet'
+  endpoint: https://registry.npmjs.org/-/v1/search?text=91squarefeet
+  results: 0
+- registry: npm
+  query: '91sqft'
+  endpoint: https://registry.npmjs.org/-/v1/search?text=91sqft
+  results: 0
+- registry: pypi
+  endpoint: https://pypi.org/pypi/91squarefeet/json
+  status: 404
+- registry: rubygems
+  endpoint: https://rubygems.org/api/v1/gems/91squarefeet.json
+  status: 404
+- registry: crates.io
+  endpoint: https://crates.io/api/v1/crates/91squarefeet
+  status: 403
+  note: crates.io rejects the unauthenticated user agent; the crate name is not referenced anywhere on the provider's site either.
+- registry: packagist
+  endpoint: https://packagist.org/packages/91squarefeet/
+  status: 302
+  note: redirect to the Packagist search page, i.e. no vendor namespace exists.
+- registry: github
+  query: 91squarefeet / 91sqft organization
+  results: 0
+checked: '2026-09-05'

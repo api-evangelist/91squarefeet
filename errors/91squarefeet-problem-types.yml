@@ -1,0 +1,52 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  Live anonymous responses from https://91squarefeet.com/wp-json/wp/v2/* observed 2026-09-05, cross-checked
+  against openapi/91squarefeet-content-api-openapi.yml.
+format: wordpress-rest
+rfc9457: false
+note: >-
+  91Squarefeet publishes no error reference. Every entry below is a response body actually returned by its own
+  host during this pass. No error code is listed that was not observed.
+envelope:
+  content_type: application/json
+  fields:
+  - name: code
+    description: Machine-readable error code string.
+  - name: message
+    description: Human-readable error message.
+  - name: data.status
+    description: HTTP status code, repeated inside the body.
+  - name: data.params
+    description: Map of parameter name to validation message (validation errors only).
+  - name: data.details
+    description: Map of parameter name to a nested error object (validation errors only).
+problem_types:
+- code: rest_invalid_param
+  status: 400
+  title: Invalid parameter
+  detail: One or more query parameters failed validation.
+  observed_message: 'Invalid parameter(s): per_page'
+  observed_at: https://91squarefeet.com/wp-json/wp/v2/posts?per_page=999
+  remediation: >-
+    Read data.params for the failing parameter and its constraint. per_page must be between 1 and 100
+    inclusive; the nested data.details code was rest_out_of_bounds.
+  method: probed
+- code: rest_forbidden
+  status: 401
+  title: Not permitted
+  detail: The request requires authentication the caller did not present.
+  observed_message: Sorry, you are not allowed to do that.
+  observed_at: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  remediation: >-
+    Authenticate with a WordPress Application Password over HTTP Basic. There is no public self-service path
+    to obtain one on this site.
+  method: probed
+- code: rest_no_route
+  status: 404
+  title: No matching route
+  detail: No route matched the URL and HTTP method.
+  observed_message: No route was found matching the URL and request method.
+  observed_at: https://91squarefeet.com/wp-json/wp/v2/nope
+  remediation: Check the path against the route index at https://91squarefeet.com/wp-json.
+  method: probed

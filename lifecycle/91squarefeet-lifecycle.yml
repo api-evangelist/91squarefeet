@@ -1,0 +1,77 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  Site-wide search of https://91squarefeet.com (llms.txt page inventory, sitemap_index.xml, main navigation)
+  plus direct probes, 2026-09-05.
+note: >-
+  91Squarefeet publishes no API versioning policy, no deprecation policy, no SLA, no changelog and no status
+  page. This is a recorded absence backed by probes, not an unchecked gap. NO StatusPage and NO Deprecation
+  pointer is emitted in apis.yml, because neither exists.
+versioning:
+  policy_published: false
+  scheme: namespace-in-path
+  current: wp/v2
+  detail: >-
+    The only version signal is the WordPress REST namespace in the path. The company makes no statement about
+    how or when that surface changes.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  detail: >-
+    No Sunset or Deprecation header was returned on any observed response, and no deprecation policy page
+    exists. No operation in the derived contract is marked deprecated.
+status_page:
+  published: false
+  url: null
+  probes:
+  - url: https://status.91squarefeet.com/
+    result: NXDOMAIN
+  - url: https://91squarefeet.com/status/
+    status: 404
+sla:
+  published: false
+  detail: >-
+    No service-level agreement is published. The company's published response commitments are commercial
+    (project delivery timelines), not API availability.
+changelog:
+  published: false
+  detail: >-
+    No dated changelog, release-notes or "what's new" page exists. The blog at https://91squarefeet.com/blog/
+    is marketing content about retail and office fit-outs, not a product changelog. NO ChangeLog pointer is
+    emitted.
+  probes:
+  - url: https://91squarefeet.com/changelog/
+    status: 404
+  - url: https://91squarefeet.com/blog/
+    status: 200
+    note: marketing blog, not a changelog
+site_freshness:
+  last_sitemap_modification: '2026-08-13'
+  source: https://91squarefeet.com/sitemap_index.xml
+  detail: >-
+    The post and page sitemaps were last modified 2026-08-13; the portfolio sitemap 2025-08-07; case studies
+    2023-11-15. The site is maintained, so the content surface is live rather than abandoned.
+developer_program:
+  published: false
+  detail: >-
+    No developer portal, API reference, getting-started guide or docs host exists. Every conventional location
+    was probed and returned 404 or NXDOMAIN.
+  probes:
+  - url: https://91squarefeet.com/developers/
+    status: 404
+  - url: https://91squarefeet.com/developer/
+    status: 404
+  - url: https://91squarefeet.com/docs/
+    status: 404
+  - url: https://91squarefeet.com/api/
+    status: 404
+  - url: https://api.91squarefeet.com/
+    result: NXDOMAIN
+  - url: https://docs.91squarefeet.com/
+    result: NXDOMAIN
+  - url: https://developer.91squarefeet.com/
+    result: NXDOMAIN
+checked: '2026-09-05'

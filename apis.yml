@@ -1,23 +1,178 @@
 aid: 91squarefeet
 name: 91Squarefeet
-description: '91Squarefeet is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  91Squarefeet is a Gurugram, India based design-and-build company delivering turnkey retail and office
+  fit-outs for brands expanding their physical footprint across India. Founded 2018-2019 and backed by Y
+  Combinator, Stellaris Venture Partners and Stride Ventures, it runs a full-stack, non-subcontracted model —
+  in-house project management, a digitized supply chain spanning fixture factories, material OEMs, engineering
+  consultants and labour contractors, and an internal AI-assisted project platform with a field mobile app —
+  and reports 1,100+ delivered projects for brands including TATA, DLF, Godrej, Asian Paints, Kotak and
+  Bluestone. It publishes no developer program, no API documentation and no OpenAPI. The only
+  machine-readable surfaces on its host are the WordPress REST API its public website exposes (serving the
+  company's own portfolio, client, case-study, property, testimonial and press-release content anonymously),
+  a Rank Math llms.txt, and a gated WordPress MCP adapter endpoint.
 url: https://raw.githubusercontent.com/api-evangelist/91squarefeet/refs/heads/main/apis.yml
+image: https://91squarefeet.com/wp-content/uploads/2024/02/91_400x400.webp
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
+x-tier: profiled
 x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-05'
 modified: '2026-09-05'
+position: Producing
 tags:
 - Company
-apis: []
+- Construction
+- Retail
+- Interior Design
+- Real Estate
+- Project Management
+- Supply Chain
+- India
+- Content
+- WordPress
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: 91squarefeet:91squarefeet-content-api
+  name: 91Squarefeet Content API
+  description: >-
+    The read-only WordPress REST API (`wp/v2` namespace) that 91squarefeet.com serves by default, including the
+    custom content types the company registered for its own business content — portfolio (delivered fit-out
+    projects), client, case_study, property, testimonial and press_release — alongside the standard posts,
+    pages, media, users, comments, taxonomy and search collections. Every operation described was probed
+    anonymously and returned HTTP 200; anonymous requests are read-only (the origin answers `Allow: GET` on
+    collections). This is a CMS-exposed content surface, not a documented developer product: 91Squarefeet
+    publishes no developer portal, no API reference and no specification of its own, so the OpenAPI here was
+    derived mechanically from the route index the site itself serves at https://91squarefeet.com/wp-json.
+  humanURL: https://91squarefeet.com/
+  image: https://91squarefeet.com/wp-content/uploads/2024/02/91_400x400.webp
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Content
+  - WordPress
+  - Portfolio
+  - Retail
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-content-api-openapi.yml
+  - type: Overlay
+    url: overlays/91squarefeet-content-api-overlay.yaml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+  x-evidence:
+    discovery_document: https://91squarefeet.com/wp-json
+    http_status: 200
+    routes_declared: 367
+    operations_described: 38
+    fetched: '2026-09-05'
+    note: >-
+      Ownership check — the discovery document self-identifies as name "91Squarefeet", url and home
+      "https://91squarefeet.com", description "Creating Retail Expansion Playbook In India". The surface is
+      served by the registrable domain the company operates and describes the company's own content.
+- aid: 91squarefeet:91squarefeet-mcp-adapter
+  name: 91Squarefeet MCP Adapter Endpoint
+  description: >-
+    A Model Context Protocol endpoint present on the 91squarefeet.com host at the WordPress `mcp` REST
+    namespace, route `mcp/mcp-adapter-default-server`, declared by the site's own /wp-json route index. It is
+    the WordPress MCP Adapter plugin's default server fronting the site's content estate — not a documented
+    91Squarefeet product. It is authentication-gated: an anonymous JSON-RPC `tools/list` returns HTTP 401
+    `rest_forbidden`, so the live tool inventory and per-tool inputSchema cannot be enumerated without
+    credentials. The site advertises no OAuth metadata (/.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource both 404); the only authentication scheme the discovery document
+    declares is WordPress Application Passwords.
+  humanURL: https://91squarefeet.com/
+  image: https://91squarefeet.com/wp-content/uploads/2024/02/91_400x400.webp
+  baseURL: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  tags:
+  - MCP
+  - Agents
+  - Content
+  properties:
+  - type: MCPServer
+    url: mcp/91squarefeet-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/91squarefeet-tool-crosswalk.yml
+  x-evidence:
+    namespace_index: https://91squarefeet.com/wp-json/mcp
+    namespace_index_status: 200
+    tools_list_status: 401
+    tools_list_response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+    oauth_authorization_server_status: 404
+    fetched: '2026-09-05'
 common:
 - type: Website
-  url: https://equityzen.com/company/91squarefeet
+  url: https://91squarefeet.com/
+- type: Blog
+  url: https://91squarefeet.com/blog/
+- type: BlogRSS
+  url: https://91squarefeet.com/blog/feed/
+- type: PrivacyPolicy
+  url: https://91squarefeet.com/privacy-policy/
+- type: Support
+  url: https://91squarefeet.com/contact-us/
+- type: LinkedIn
+  url: https://in.linkedin.com/company/91sqft
+- type: Twitter
+  url: https://x.com/91sqft
+- type: YouTube
+  url: https://www.youtube.com/@91squarefeet
+- type: Careers
+  url: https://91squarefeet.com/careers/
+- type: LLMsTxt
+  url: llms/91squarefeet-llms.txt
+- type: DomainSecurity
+  url: security/91squarefeet-domain-security.yml
+- type: Conformance
+  url: conformance/91squarefeet-conformance.yml
+- type: Lifecycle
+  url: lifecycle/91squarefeet-lifecycle.yml
+- type: Plans
+  url: plans/91squarefeet-plans-pricing.yml
+- type: Packages
+  url: packages/91squarefeet-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v3
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    91Squarefeet is a turnkey construction and fit-out contractor with no developer program — /developers/,
+    /developer/, /docs/ and /api/ all 404 and api./docs./developer. subdomains do not resolve — but its own
+    site does serve three real machine-readable surfaces that this pass captured: a Rank Math llms.txt, a
+    367-route WordPress REST index whose wp/v2 content collections (portfolio, client, case_study, property,
+    testimonial, press_release) return the company's own business content anonymously, and an
+    authentication-gated WordPress MCP adapter endpoint.
+  evidence:
+    - url: https://91squarefeet.com/llms.txt
+      status: 200
+    - url: https://91squarefeet.com/wp-json
+      status: 200
+    - url: https://91squarefeet.com/wp-json/wp/v2/portfolio?per_page=1
+      status: 200
+    - url: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+      status: 401
+    - url: https://91squarefeet.com/developers/
+      status: 404
+    - url: https://91squarefeet.com/.well-known/agent-card.json
+      status: 404
+  checked: '2026-09-05'

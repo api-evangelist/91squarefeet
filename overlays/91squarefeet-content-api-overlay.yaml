@@ -1,0 +1,57 @@
+overlay: 1.0.0
+info:
+  title: 91Squarefeet Content API — API Evangelist enhancements
+  version: 1.0.0
+  description: >-
+    Enhancements API Evangelist applies on top of openapi/91squarefeet-content-api-openapi.yml. That base
+    document is itself derived from the route index 91squarefeet.com serves at /wp-json; 91Squarefeet
+    publishes no OpenAPI of its own. This overlay carries the interpretive layer — provenance, the
+    read-only/gated boundary, and the business meaning of the custom content types — so the derived contract
+    stays a faithful transcription of the provider's own document and our commentary stays separable from it.
+extends: ../openapi/91squarefeet-content-api-openapi.yml
+x-generated: '2026-09-05'
+x-method: generated
+x-source: openapi/91squarefeet-content-api-openapi.yml
+actions:
+- target: $.info
+  description: Record the provenance and the scope boundary of the derived contract.
+  update:
+    x-api-evangelist:
+      derived_from: https://91squarefeet.com/wp-json
+      derived_on: '2026-09-05'
+      provider_publishes_spec: false
+      provider_publishes_docs: false
+      scope: >-
+        Read-only, anonymously reachable wp/v2 operations only. Write operations, the WordPress admin and
+        plugin namespaces, the wp-abilities/v1 namespace and the mcp namespace are authentication-gated and
+        are deliberately not described.
+      verified: Every operation was probed anonymously and returned HTTP 200 on 2026-09-05.
+- target: $.info
+  description: State the runtime semantics an agent needs before calling.
+  update:
+    x-agent-notes:
+      auth_required_for_read: false
+      write_surface_public: false
+      idempotency: not-applicable-read-only
+      reversibility: not-applicable-read-only
+      pagination: page/per_page with X-WP-Total and X-WP-TotalPages headers; per_page maximum 100
+      error_format: 'WordPress REST envelope {code, message, data.status} — not RFC 9457'
+      rate_limits: none published, none signalled
+- target: $.tags[?(@.name=='Portfolio')]
+  description: Explain what a Portfolio record means in this company's business.
+  update:
+    x-business-meaning: >-
+      A delivered turnkey fit-out project. This is 91Squarefeet's core public evidence of work — the same
+      records that render https://91squarefeet.com/portfolio/. 42 records observed 2026-09-05.
+- target: $.tags[?(@.name=='Client')]
+  description: Explain what a Client record means in this company's business.
+  update:
+    x-business-meaning: >-
+      A brand 91Squarefeet has delivered projects for, rendered at https://91squarefeet.com/clients/. 73
+      records observed 2026-09-05.
+- target: $.tags[?(@.name=='Property')]
+  description: Explain what a Property record means in this company's business.
+  update:
+    x-business-meaning: >-
+      A retail or office property record used by the site's location surfaces. 26 records observed
+      2026-09-05.

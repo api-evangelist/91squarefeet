@@ -1,0 +1,42 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  Live anonymous responses from https://91squarefeet.com/wp-json/wp/v2/* observed 2026-09-05, plus a site-wide
+  search for a published limits page.
+limit_count: 0
+note: >-
+  91Squarefeet publishes no rate limits — there is no developer documentation of any kind to publish them in.
+  No rate-limit response header of any form was observed. This is an honest zero from a real probe, not an
+  unchecked field.
+limits: []
+response_headers:
+  observed: []
+  absent:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - Retry-After
+  detail: >-
+    Response headers observed on a 200 were x-wp-total, x-wp-totalpages, link, allow, vary,
+    access-control-expose-headers, cache-control, x-litespeed-cache-control, x-robots-tag,
+    x-content-type-options, content-security-policy, server (LiteSpeed) and platform (hostinger). None carries
+    a quota signal.
+exhaustion_status: null
+enforced_constraints:
+- parameter: per_page
+  maximum: 100
+  status_on_violation: 400
+  error_code: rest_invalid_param
+  detail: >-
+    The only server-enforced request constraint observed is the page-size ceiling of 100 records, which is a
+    WordPress default rather than a published policy.
+  evidence: https://91squarefeet.com/wp-json/wp/v2/posts?per_page=999
+edge:
+  provider: LiteSpeed on Hostinger
+  detail: >-
+    Any throttling in front of the origin is a shared-hosting/CDN edge policy, not a documented API quota. No
+    challenge or 429 was encountered across roughly 60 probes in this pass.
+checked: '2026-09-05'

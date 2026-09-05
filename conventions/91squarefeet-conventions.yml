@@ -1,0 +1,113 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  openapi/91squarefeet-content-api-openapi.yml (itself derived from https://91squarefeet.com/wp-json), plus
+  live response headers and error bodies observed on https://91squarefeet.com/wp-json/wp/v2/* on 2026-09-05.
+note: >-
+  91Squarefeet publishes no API documentation, so nothing here is quoted from the provider. Every convention
+  below was OBSERVED on live anonymous responses from its own host, or read from the machine-readable route
+  index the site serves. Where a convention does not exist, it is recorded as absent rather than assumed.
+authentication:
+  style: none-for-read
+  detail: >-
+    Anonymous requests to the wp/v2 content collections succeed and the origin answers `Allow: GET`. Writes and
+    the admin/plugin namespaces require WordPress Application Passwords over HTTP Basic; there is no public
+    self-service path to obtain one.
+  detail_artifact: authentication/91squarefeet-authentication.yml
+pagination:
+  style: page-number
+  parameters:
+  - name: page
+    default: 1
+    note: 1-indexed page number.
+  - name: per_page
+    default: 10
+    minimum: 1
+    maximum: 100
+    note: Enforced server-side; per_page=999 returns 400 rest_invalid_param / rest_out_of_bounds.
+  - name: offset
+    note: Alternative to page; offsets the result set.
+  response_fields: []
+  response_headers:
+  - name: X-WP-Total
+    meaning: Total number of records matching the query.
+    observed_value: '42'
+  - name: X-WP-TotalPages
+    meaning: Total number of pages available at the current per_page.
+    observed_value: '21'
+  - name: Link
+    meaning: RFC 8288 link header carrying rel="next" and rel="prev".
+    observed_value: '<https://91squarefeet.com/wp-json/wp/v2/portfolio?per_page=2&page=2>; rel="next"'
+  cors: >-
+    Access-Control-Expose-Headers exposes X-WP-Total, X-WP-TotalPages and Link to browsers, so the pagination
+    signal is reachable from a cross-origin agent.
+filtering_and_shaping:
+  search: '`search` free-text parameter on every collection.'
+  field_selection: '`_fields` — a comma-separated list limiting which properties are returned.'
+  embedding: '`_embed` — inlines linked resources (author, featured media, terms) under `_embedded`.'
+  ordering: '`orderby` + `order` (asc|desc); collection-specific orderby enums are declared per operation.'
+  filtering: 'Per-collection `include`, `exclude`, `slug`, `status`, `after`, `before`, `modified_after`, `modified_before`, plus taxonomy filters (`categories`, `tags`) on posts.'
+  context: '`context` (view|embed|edit) controls response verbosity; `edit` requires authentication.'
+error_envelope:
+  format: wordpress-rest
+  rfc9457: false
+  content_type: application/json
+  shape:
+    code: Machine-readable string error code.
+    message: Human-readable message.
+    data.status: HTTP status code, repeated in the body.
+    data.params: Per-parameter validation messages (on rest_invalid_param).
+    data.details: Nested per-parameter error objects (on rest_invalid_param).
+  observed:
+  - status: 400
+    body: '{"code":"rest_invalid_param","message":"Invalid parameter(s): per_page","data":{"status":400,...}}'
+  - status: 401
+    body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+  - status: 404
+    body: '{"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}'
+  detail_artifact: errors/91squarefeet-problem-types.yml
+versioning:
+  style: namespace-in-path
+  current: wp/v2
+  detail: >-
+    Version is a path namespace (/wp-json/wp/v2/). Other namespaces present on the host — oembed/1.0,
+    wp-abilities/v1, mcp, and a set of plugin namespaces — version independently. No provider versioning or
+    deprecation policy is published.
+request_id_tracing:
+  supported: false
+  detail: No request-id or correlation header was returned on any observed response.
+rate_limit_signaling:
+  supported: false
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header appeared on any observed response, and no limit is
+    published. See rate-limits/91squarefeet-rate-limits.yml.
+caching:
+  detail: >-
+    The origin (LiteSpeed on Hostinger) returns `Cache-Control: no-cache, must-revalidate, max-age=0,
+    no-store, private` and `X-LiteSpeed-Cache-Control: no-cache` on REST responses. No ETag or Last-Modified
+    was returned, so conditional requests are not available.
+idempotency:
+  coverage: na
+  mechanism: none
+  scope: []
+  detail: >-
+    There is no anonymous write surface. Anonymous requests are read-only — the origin answers `Allow: GET` on
+    the content collections and returns 401 rest_forbidden on any authenticated namespace. Idempotency is
+    therefore not applicable rather than absent-and-failing. WordPress core publishes no Idempotency-Key
+    mechanism for the authenticated write surface either.
+dry_run_mode:
+  supported: na
+  detail: No write surface is publicly reachable, so a dry-run mode is not applicable.
+reversibility:
+  grade: na
+  detail: >-
+    The publicly reachable surface is read-only (GET only, anonymous). There are no writes to reverse, so
+    reversibility is not applicable rather than undocumented. No cancel/refund/void/undo/restore operation
+    exists in the described surface, and none is claimed.
+  write_surfaces: []
+cross_links:
+  errors: errors/91squarefeet-problem-types.yml
+  authentication: authentication/91squarefeet-authentication.yml
+  lifecycle: lifecycle/91squarefeet-lifecycle.yml
+  rate_limits: rate-limits/91squarefeet-rate-limits.yml
+  data_model: data-model/91squarefeet-data-model.yml

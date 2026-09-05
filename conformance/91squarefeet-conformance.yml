@@ -1,0 +1,63 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  openapi/91squarefeet-content-api-openapi.yml and live responses from https://91squarefeet.com/wp-json/wp/v2/*
+  observed 2026-09-05. 91Squarefeet publishes no compliance, certification or standards claims anywhere on its
+  public site — the pages probed (home, about-us, privacy-policy, contact-us, suppliers, careers) make none.
+note: >-
+  Reward-only. Absence of a conformance below is an honest measurement, not a penalty. Construction and
+  interior fit-out has no widely adopted API interchange standard, so no domain standard is asserted.
+conformance:
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: >-
+    Collection responses return an RFC 8288 Link header carrying rel="next"/"prev" — observed
+    '<https://91squarefeet.com/wp-json/wp/v2/portfolio?per_page=2&page=2>; rel="next"' on
+    https://91squarefeet.com/wp-json/wp/v2/portfolio?per_page=2 (HTTP 200).
+- id: pagination
+  conforms: true
+  evidence: >-
+    Page-number pagination via page/per_page (max 100, enforced with a 400), with X-WP-Total and
+    X-WP-TotalPages response headers, exposed cross-origin via Access-Control-Expose-Headers.
+- id: hal-style-hypermedia
+  conforms: true
+  evidence: >-
+    Every record carries a _links object with self, collection, about, wp:featuredmedia, wp:attachment,
+    wp:term and curies relations. This is the WordPress REST link format, not strict HAL.
+- id: json-rpc-2.0
+  conforms: true
+  evidence: >-
+    The MCP endpoint at https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server speaks JSON-RPC 2.0;
+    a well-formed tools/list request returned a structured 401 rather than a transport error.
+- id: mcp
+  conforms: partial
+  evidence: >-
+    An MCP endpoint is served (WordPress MCP Adapter default server) but is authentication-gated, so protocol
+    conformance beyond the transport could not be verified. See mcp/91squarefeet-mcp.yml (tools/list HTTP 401).
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors use the WordPress {code,message,data.status} envelope with content-type application/json, not
+    application/problem+json. Observed on 400, 401 and 404 responses.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 security scheme is declared and https://91squarefeet.com/.well-known/oauth-authorization-server
+    returned 404. Authentication is WordPress Application Passwords (HTTP Basic).
+- id: oidc
+  conforms: false
+  evidence: https://91squarefeet.com/.well-known/openid-configuration returned 404.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key mechanism is documented or observable. Not applicable in practice — the anonymous
+    surface is read-only (Allow: GET).
+domain_standard: null
+domain_standard_note: >-
+  No domain interchange standard was found declared in the contract or claimed in the docs. Commercial
+  construction and retail fit-out has no equivalent of SCIM, OpenRTB, FHIR or ISO 20022 in common use, and
+  none is invented here.
+certifications: []
+certifications_note: >-
+  No SOC 2, ISO 27001, PCI, HIPAA or FedRAMP claim appears anywhere on the public site, and no trust center
+  exists — probe-security-programs.py returned vdp=none trust=none. NO `Compliance` pointer is emitted.

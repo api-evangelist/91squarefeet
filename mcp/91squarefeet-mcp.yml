@@ -1,0 +1,75 @@
+generated: '2026-09-05'
+method: probed
+source: https://91squarefeet.com/wp-json/mcp
+status: gated
+description: >-
+  91squarefeet.com serves a Model Context Protocol endpoint at the WordPress `mcp` REST namespace. It was not
+  found in any MCP registry, in 91Squarefeet marketing material, or in any documentation — the company
+  publishes none. It was discovered because the site's own /wp-json route index declares an `mcp` namespace
+  alongside `wp-abilities/v1`, both of which are the WordPress MCP Adapter / Abilities API plugin surfaces.
+  The endpoint fronts the site's WordPress content estate, not any 91Squarefeet construction or
+  project-management system. Treat this as a CMS plugin default that happens to be reachable, NOT as a
+  product an agent is invited to use.
+server:
+  name: 91squarefeet
+  transport: http
+  url: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  protocol: MCP over HTTP (JSON-RPC 2.0)
+  implementation: >-
+    WordPress REST namespace `mcp`, route `mcp/mcp-adapter-default-server` (WordPress MCP Adapter plugin
+    default server). Site runs WordPress + Elementor + Pods on LiteSpeed/Hostinger, PHP 8.2.33.
+authorization:
+  required: true
+  model: WordPress Application Passwords (HTTP Basic)
+  authorization_endpoint: https://91squarefeet.com/wp-admin/authorize-application.php
+  oauth_metadata_published: false
+  note: >-
+    The site publishes no RFC 8414 authorization-server metadata and no RFC 9728 protected-resource metadata —
+    both /.well-known paths returned 404. The only authentication scheme the /wp-json discovery document
+    declares is application-passwords. There is no public self-service path to a credential.
+tools:
+  discovered: false
+  discovery_method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} with Accept: application/json, text/event-stream'
+  http_status: 401
+  response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+  note: >-
+    The live tool list and per-tool inputSchema are auth-gated. 91Squarefeet publishes no tool inventory in
+    documentation and none appears in its llms.txt, so NO tool list is recorded here — deriving one would be
+    fabrication. Authenticated introspection is required to enumerate the surface.
+related_surfaces:
+  openapi: openapi/91squarefeet-content-api-openapi.yml
+  note: >-
+    The MCP endpoint and the derived Content API describe the same underlying WordPress content estate, but
+    the tool projection is unreadable while gated. See mcp/91squarefeet-tool-crosswalk.yml.
+  wp_abilities:
+    url: https://91squarefeet.com/wp-json/wp-abilities/v1/abilities
+    status: 401
+    note: The WordPress Abilities API index, which would name the abilities backing the MCP tools, is gated too.
+x-evidence:
+  fetched: '2026-09-05'
+  probes:
+  - url: https://91squarefeet.com/wp-json
+    status: 200
+    content_type: application/json
+    note: declares namespaces mcp and wp-abilities/v1
+  - url: https://91squarefeet.com/wp-json/mcp
+    status: 200
+    content_type: application/json
+  - url: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+    method: POST tools/list
+    status: 401
+  - url: https://91squarefeet.com/wp-json/wp-abilities/v1/abilities
+    status: 401
+  - url: https://91squarefeet.com/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://91squarefeet.com/.well-known/oauth-protected-resource
+    status: 404
+deployment:
+  mode: remote
+  endpoint: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  install: null
+  package: null
+  auth: api-key
+  verified: probed
+  probe: gated
+  checked: '2026-09-05'

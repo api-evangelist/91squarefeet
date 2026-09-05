@@ -1,0 +1,67 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  mcp/91squarefeet-mcp.yml (endpoint probed 2026-09-05, tools/list HTTP 401) and
+  openapi/91squarefeet-content-api-openapi.yml (derived from https://91squarefeet.com/wp-json).
+note: >-
+  NO tools are mapped. The MCP endpoint on 91squarefeet.com is authentication-gated — an anonymous tools/list
+  returns 401 rest_forbidden — and the WordPress Abilities index that would name the backing abilities is
+  gated too (401). 91Squarefeet publishes no documentation and no llms.txt tool list, so there is no
+  provider-published tool inventory to map by name either. Inventing a crosswalk from what the WordPress MCP
+  Adapter plugin usually exposes would be fabrication, so this file records the divergence honestly: the REST
+  side is fully enumerated, the MCP side is unreadable.
+surfaces:
+  openapi:
+    file: openapi/91squarefeet-content-api-openapi.yml
+    base: https://91squarefeet.com/wp-json
+    gated: false
+    note: 38 read operations, all verified anonymously reachable.
+  mcp:
+    url: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+    gated: true
+    gate_evidence:
+      method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+      status: 401
+      body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+  wp_abilities:
+    url: https://91squarefeet.com/wp-json/wp-abilities/v1/abilities
+    gated: true
+    gate_evidence:
+      status: 401
+  graphql:
+    present: false
+    evidence: https://91squarefeet.com/graphql returned 404 (site 404 HTML).
+crosswalk: []
+mcp_only: []
+rest_only:
+- operationId: listPortfolio
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listClient
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listCaseStudy
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listProperty
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listTestimonial
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listPressRelease
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listPosts
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listPages
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: listMedia
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+- operationId: search
+  reason: MCP tool inventory is gated; no tool could be bound to this operation.
+rest_only_note: >-
+  All 38 REST operations are listed as rest_only in effect; the ten most consequential are enumerated above
+  rather than repeating the full list, which is in the OpenAPI.
+coverage:
+  mcp_tools_total: null
+  mcp_tools_mapped: 0
+  rest_operations_total: 38
+  rest_operations_mapped: 0
+  confidence: none
+  blocker: authenticated-introspection-required
+checked: '2026-09-05'

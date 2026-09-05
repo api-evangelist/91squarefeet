@@ -1,0 +1,37 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  Site-wide search of https://91squarefeet.com — the page inventory in its own llms.txt, the sitemap index,
+  and direct probes of /pricing/ (404) and /plans/ — on 2026-09-05.
+plan_count: 0
+note: >-
+  91Squarefeet publishes no plans, tiers or prices of any kind, for the API surface or for its services. It
+  sells project-based turnkey commercial fit-outs quoted per engagement, and every commercial path on the site
+  is a lead form ("Talk to us", the supplier onboarding form on /suppliers/, /contact-us/). There is no
+  self-service signup, no account, no billing surface and no free tier. This is an honest zero recorded from a
+  real search, not an omitted file.
+plans: []
+commercial_model: project-quote
+commercial_surfaces:
+- url: https://91squarefeet.com/contact-us/
+  status: 200
+  kind: contact form
+- url: https://91squarefeet.com/suppliers/
+  status: 200
+  kind: supplier onboarding form (name, email, phone, city, state, annual turnover band, business type)
+- url: https://91squarefeet.com/project-financing/
+  status: 200
+  kind: project financing offer page, no published rates
+probes:
+- url: https://91squarefeet.com/pricing/
+  status: 404
+- url: https://91squarefeet.com/terms/
+  status: 404
+- url: https://91squarefeet.com/terms-and-conditions/
+  status: 404
+api_pricing:
+  published: false
+  detail: >-
+    The wp/v2 content surface is served free and unauthenticated as part of the public website. It is not
+    metered, sold, or presented as a product.
+checked: '2026-09-05'

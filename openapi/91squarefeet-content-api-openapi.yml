@@ -1,0 +1,4866 @@
+openapi: 3.1.0
+info:
+  title: 91Squarefeet Content API
+  version: wp/v2
+  description: Read-only content API for 91squarefeet.com. This is the WordPress REST API `wp/v2` namespace that the company's
+    public website exposes by default, plus the custom content types 91Squarefeet registered for its own business content
+    — delivered fit-out projects (portfolio), clients, case studies, properties, testimonials and press releases. Every operation
+    described here was probed anonymously and returned HTTP 200. 91Squarefeet publishes no developer program, no API documentation
+    and no OpenAPI of its own; this document was DERIVED mechanically from the route index the site itself serves at https://91squarefeet.com/wp-json,
+    and every path, method, parameter, type and default below is copied from that document. Nothing here is invented. Write
+    operations, the WordPress admin/plugin namespaces and the site's MCP adapter route are authenticated and are deliberately
+    NOT described here.
+  contact:
+    name: 91Squarefeet
+    url: https://91squarefeet.com/contact-us/
+  x-generated-from: https://91squarefeet.com/wp-json (WordPress REST route index)
+  x-generated-by: API Evangelist enrichment pipeline — derived, not published by the provider
+  x-observed:
+    probed: '2026-09-05'
+    note: Response field sets and record counts recorded from live anonymous GETs against https://91squarefeet.com/wp-json/wp/v2/*;
+      X-WP-Total supplied the counts.
+servers:
+- url: https://91squarefeet.com/wp-json
+  description: WordPress REST API root on the production site host. Verified 2026-09-05 (HTTP 200, application/json).
+tags:
+- name: Post
+  description: Blog posts published on 91squarefeet.com.
+- name: Page
+  description: Site pages (services, about, suppliers, careers).
+- name: Media
+  description: Media library items — project photography, video and documents.
+- name: Category
+  description: Post categories.
+- name: Tag
+  description: Post tags.
+- name: User
+  description: Public author profiles.
+- name: Comment
+  description: Comments on posts.
+- name: Portfolio
+  description: Delivered fit-out projects in the 91Squarefeet portfolio.
+- name: CaseStudy
+  description: Published client case studies.
+- name: Client
+  description: Brands 91Squarefeet has delivered projects for.
+- name: Property
+  description: Retail/office property listings.
+- name: Testimonial
+  description: Client testimonials.
+- name: PressRelease
+  description: Press releases and media mentions.
+- name: ClientCategory
+  description: Taxonomy of client categories.
+- name: DisplayLocation
+  description: Taxonomy controlling where an item is displayed.
+- name: MobileCategory
+  description: Taxonomy of mobile display categories.
+- name: PropertyLocation
+  description: Taxonomy of property locations.
+- name: Types
+  description: Registered content types on the site.
+- name: Taxonomies
+  description: Registered taxonomies on the site.
+- name: Statuses
+  description: Registered post statuses.
+- name: Search
+  description: Cross-content-type search.
+paths:
+  /wp/v2/posts:
+    get:
+      operationId: listPosts
+      summary: List Post records
+      description: Blog posts published on 91squarefeet.com. Read-only, unauthenticated. Paginated with page/per_page; totals
+        are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Post
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to posts assigned to specific authors.
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes posts assigned to specific authors.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: categories
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+      - name: categories_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the categories taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: format
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - standard
+            - aside
+            - chat
+            - gallery
+            - link
+            - image
+            - quote
+            - status
+            - video
+            - audio
+        description: Limit result set to items assigned one or more given formats.
+      - name: ignore_sticky
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+        description: Whether to ignore sticky posts or not.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: sticky
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Limit result set to items that are sticky.
+      - name: tags
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the tags taxonomy.
+      - name: tags_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the tags taxonomy.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of Post records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/posts/{id}:
+    get:
+      operationId: getPost
+      summary: Retrieve one Post record
+      description: Retrieve a single Post record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Post
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Post record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Post record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/pages:
+    get:
+      operationId: listPages
+      summary: List Page records
+      description: Site pages (services, about, suppliers, careers). Read-only, unauthenticated. Paginated with page/per_page;
+        totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Page
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to posts assigned to specific authors.
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes posts assigned to specific authors.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: menu_order
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to posts with a specific menu_order value.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          - menu_order
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to items with particular parent IDs.
+      - name: parent_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to all items except those of a particular parent ID.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      responses:
+        '200':
+          description: A page of Page records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Page'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/pages/{id}:
+    get:
+      operationId: getPage
+      summary: Retrieve one Page record
+      description: Retrieve a single Page record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Page
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Page record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Page record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/media:
+    get:
+      operationId: listMedia
+      summary: List Media records
+      description: Media library items — project photography, video and documents. Read-only, unauthenticated. Paginated with
+        page/per_page; totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Media
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to posts assigned to specific authors.
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes posts assigned to specific authors.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: media_type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - image
+            - video
+            - text
+            - application
+            - audio
+        description: Limit result set to attachments of a particular media type or media types.
+      - name: mime_type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to attachments of a particular MIME type or MIME types.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to items with particular parent IDs.
+      - name: parent_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to all items except those of a particular parent ID.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - inherit
+            - private
+            - trash
+          default: inherit
+        description: Limit result set to posts assigned one or more statuses.
+      responses:
+        '200':
+          description: A page of Media records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Media'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/media/{id}:
+    get:
+      operationId: getMediaItem
+      summary: Retrieve one Media record
+      description: Retrieve a single Media record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Media
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Media record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested Media record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Media'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/categories:
+    get:
+      operationId: listCategories
+      summary: List Category records
+      description: Post categories. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the X-WP-Total
+        and X-WP-TotalPages response headers.
+      tags:
+      - Category
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of Category records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/categories/{id}:
+    get:
+      operationId: getCategory
+      summary: Retrieve one Category record
+      description: Retrieve a single Category record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Category record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested Category record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/tags:
+    get:
+      operationId: listTags
+      summary: List Tag records
+      description: Post tags. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the X-WP-Total
+        and X-WP-TotalPages response headers.
+      tags:
+      - Tag
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of Tag records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTag
+      summary: Retrieve one Tag record
+      description: Retrieve a single Tag record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Tag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Tag record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested Tag record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/users:
+    get:
+      operationId: listUsers
+      summary: List User records
+      description: Public author profiles. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in
+        the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - User
+      parameters:
+      - name: capabilities
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users matching at least one specific capability provided. Accepts csv list or single
+          capability.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: has_published_posts
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Limit result set to users who have published posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - registered_date
+          - slug
+          - include_slugs
+          - email
+          - url
+          default: name
+        description: Sort collection by user attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: roles
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users matching at least one specific role provided. Accepts csv list or single role.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - email
+            - name
+            - id
+            - username
+            - slug
+          default: []
+        description: Array of column names to be searched.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users with one or more specific slugs.
+      - name: who
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - authors
+        description: Limit result set to users who are considered authors.
+      responses:
+        '200':
+          description: A page of User records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/users/{id}:
+    get:
+      operationId: getUser
+      summary: Retrieve one User record
+      description: Retrieve a single User record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - User
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the User record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested User record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/comments:
+    get:
+      operationId: listComments
+      summary: List Comment records
+      description: Comments on posts. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the
+        X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Comment
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to comments published after a given ISO8601 compliant date.
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Limit result set to comments assigned to specific user IDs. Requires authorization.
+      - name: author_email
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit result set to that from a specific author email. Requires authorization.
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Ensure result set excludes comments assigned to specific user IDs. Requires authorization.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to comments published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - date
+          - date_gmt
+          - id
+          - include
+          - post
+          - parent
+          - type
+          default: date_gmt
+        description: Sort collection by comment attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to comments of specific parent IDs.
+      - name: parent_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific parent IDs.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to comments assigned to specific post IDs.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          default: approve
+        description: Limit result set to comments assigned a specific status. Requires authorization.
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+          default: comment
+        description: Limit result set to comments assigned a specific type. Requires authorization.
+      responses:
+        '200':
+          description: A page of Comment records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/comments/{id}:
+    get:
+      operationId: getComment
+      summary: Retrieve one Comment record
+      description: Retrieve a single Comment record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Comment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Comment record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the parent post of the comment (if the post is password protected).
+      responses:
+        '200':
+          description: The requested Comment record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/portfolio:
+    get:
+      operationId: listPortfolio
+      summary: List Portfolio records
+      description: Delivered fit-out projects in the 91Squarefeet portfolio. Read-only, unauthenticated. Paginated with page/per_page;
+        totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Portfolio
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: client_category
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the client_category taxonomy.
+      - name: client_category_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the client_category taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: display_location
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the display_location taxonomy.
+      - name: display_location_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the display_location taxonomy.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: mobile_category
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the mobile_category taxonomy.
+      - name: mobile_category_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the mobile_category taxonomy.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of Portfolio records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Portfolio'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/portfolio/{id}:
+    get:
+      operationId: getPortfolio
+      summary: Retrieve one Portfolio record
+      description: Retrieve a single Portfolio record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Portfolio
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Portfolio record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Portfolio record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/case_study:
+    get:
+      operationId: listCaseStudy
+      summary: List CaseStudy records
+      description: Published client case studies. Read-only, unauthenticated. Paginated with page/per_page; totals are returned
+        in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - CaseStudy
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: categories
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+      - name: categories_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the categories taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of CaseStudy records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseStudy'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/case_study/{id}:
+    get:
+      operationId: getCaseStudy
+      summary: Retrieve one CaseStudy record
+      description: Retrieve a single CaseStudy record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - CaseStudy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the CaseStudy record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested CaseStudy record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseStudy'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/client:
+    get:
+      operationId: listClient
+      summary: List Client records
+      description: Brands 91Squarefeet has delivered projects for. Read-only, unauthenticated. Paginated with page/per_page;
+        totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Client
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: client_category
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the client_category taxonomy.
+      - name: client_category_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the client_category taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: display_location
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the display_location taxonomy.
+      - name: display_location_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the display_location taxonomy.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: mobile_category
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the mobile_category taxonomy.
+      - name: mobile_category_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the mobile_category taxonomy.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of Client records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/client/{id}:
+    get:
+      operationId: getClient
+      summary: Retrieve one Client record
+      description: Retrieve a single Client record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Client
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Client record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Client record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/property:
+    get:
+      operationId: listProperty
+      summary: List Property records
+      description: Retail/office property listings. Read-only, unauthenticated. Paginated with page/per_page; totals are returned
+        in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Property
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: property_location
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the property_location taxonomy.
+      - name: property_location_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the property_location taxonomy.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of Property records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/property/{id}:
+    get:
+      operationId: getProperty
+      summary: Retrieve one Property record
+      description: Retrieve a single Property record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Property
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Property record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Property record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/testimonial:
+    get:
+      operationId: listTestimonial
+      summary: List Testimonial records
+      description: Client testimonials. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the
+        X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Testimonial
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      responses:
+        '200':
+          description: A page of Testimonial records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/testimonial/{id}:
+    get:
+      operationId: getTestimonial
+      summary: Retrieve one Testimonial record
+      description: Retrieve a single Testimonial record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Testimonial
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Testimonial record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested Testimonial record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Testimonial'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/press_release:
+    get:
+      operationId: listPressRelease
+      summary: List PressRelease records
+      description: Press releases and media mentions. Read-only, unauthenticated. Paginated with page/per_page; totals are
+        returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - PressRelease
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: categories
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+      - name: categories_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the categories taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of PressRelease records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PressRelease'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/press_release/{id}:
+    get:
+      operationId: getPressRelease
+      summary: Retrieve one PressRelease record
+      description: Retrieve a single PressRelease record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - PressRelease
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the PressRelease record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested PressRelease record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PressRelease'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/client_category:
+    get:
+      operationId: listClientCategory
+      summary: List ClientCategory records
+      description: Taxonomy of client categories. Read-only, unauthenticated. Paginated with page/per_page; totals are returned
+        in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - ClientCategory
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of ClientCategory records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientCategory'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/client_category/{id}:
+    get:
+      operationId: getClientCategory
+      summary: Retrieve one ClientCategory record
+      description: Retrieve a single ClientCategory record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - ClientCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the ClientCategory record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested ClientCategory record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientCategory'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/display_location:
+    get:
+      operationId: listDisplayLocation
+      summary: List DisplayLocation records
+      description: Taxonomy controlling where an item is displayed. Read-only, unauthenticated. Paginated with page/per_page;
+        totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - DisplayLocation
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of DisplayLocation records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DisplayLocation'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/display_location/{id}:
+    get:
+      operationId: getDisplayLocation
+      summary: Retrieve one DisplayLocation record
+      description: Retrieve a single DisplayLocation record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - DisplayLocation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the DisplayLocation record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested DisplayLocation record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayLocation'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/mobile_category:
+    get:
+      operationId: listMobileCategory
+      summary: List MobileCategory records
+      description: Taxonomy of mobile display categories. Read-only, unauthenticated. Paginated with page/per_page; totals
+        are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - MobileCategory
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of MobileCategory records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MobileCategory'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/mobile_category/{id}:
+    get:
+      operationId: getMobileCategory
+      summary: Retrieve one MobileCategory record
+      description: Retrieve a single MobileCategory record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - MobileCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the MobileCategory record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested MobileCategory record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MobileCategory'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/property_location:
+    get:
+      operationId: listPropertyLocation
+      summary: List PropertyLocation records
+      description: Taxonomy of property locations. Read-only, unauthenticated. Paginated with page/per_page; totals are returned
+        in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - PropertyLocation
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of PropertyLocation records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyLocation'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/property_location/{id}:
+    get:
+      operationId: getPropertyLocation
+      summary: Retrieve one PropertyLocation record
+      description: Retrieve a single PropertyLocation record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - PropertyLocation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the PropertyLocation record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested PropertyLocation record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyLocation'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/types:
+    get:
+      operationId: listTypes
+      summary: Types
+      description: Registered content types on the site. Read-only, unauthenticated.
+      tags:
+      - Types
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/taxonomies:
+    get:
+      operationId: listTaxonomies
+      summary: Taxonomies
+      description: Registered taxonomies on the site. Read-only, unauthenticated.
+      tags:
+      - Taxonomies
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to taxonomies associated with a specific post type.
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/statuses:
+    get:
+      operationId: listStatuses
+      summary: Statuses
+      description: Registered post statuses. Read-only, unauthenticated.
+      tags:
+      - Statuses
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/search:
+    get:
+      operationId: search
+      summary: Search
+      description: Cross-content-type search. Read-only, unauthenticated.
+      tags:
+      - Search
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: subtype
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post
+            - page
+            - e-floating-buttons
+            - elementor_library
+            - elementskit_content
+            - case_study
+            - client
+            - portfolio
+            - press_release
+            - property
+            - testimonial
+            - category
+            - post_tag
+            - client_category
+            - display_location
+            - mobile_category
+            - property_location
+            - any
+          default: any
+        description: Limit results to items of one or more object subtypes.
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - post
+          - term
+          - post-format
+          default: post
+        description: Limit results to items of an object type.
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+components:
+  schemas:
+    Post:
+      type: object
+      description: A Post record as served by the site REST API.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the record.
+        date:
+          type: string
+          format: date-time
+          description: Publication date in the site timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: Publication date as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: Last modification date in the site timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: Last modification date as GMT.
+        guid:
+          type: object
+          properties: &id001
+            rendered:
+              type: string
+              description: HTML-rendered value.
+          description: Globally unique identifier for the record.
+        slug:
+          type: string
+          description: Alphanumeric identifier unique to its type.
+        status:
+          type: string
+          description: Publication status.
+        type:
+          type: string
+          description: Content type slug.
+        link:
+          type: string
+          format: uri
+          description: URL of the record on 91squarefeet.com.
+        title:
+          type: object
+          properties: *id001
+          description: Title of the record.
+        content:
+          type: object
+          properties: *id001
+          description: Body content of the record.
+        excerpt:
+          type: object
+          properties: *id001
+          description: Excerpt of the record.
+        featured_media:
+          type: integer
+          description: Media id of the featured image.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources.
+      x-record-count-observed: 39
+    Page:
+      type: object
+      description: A Page record as served by the site REST API.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the record.
+        date:
+          type: string
+          format: date-time
+          description: Publication date in the site timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: Publication date as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: Last modification date in the site timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: Last modification date as GMT.
+        guid:
+          type: object
+          properties: *id001
+          description: Globally unique identifier for the record.
+        slug:
+          type: string
+          description: Alphanumeric identifier unique to its type.
+        status:
+          type: string
+          description: Publication status.
+        type:
+          type: string
+          description: Content type slug.
+        link:
+          type: string
+          format: uri
+          description: URL of the record on 91squarefeet.com.
+        title:
+          type: object
+          properties: *id001
+          description: Title of the record.
+        content:
+          type: object
+          properties: *id001
+          description: Body content of the record.
+        excerpt:
+          type: object
+          properties: *id001
+          description: Excerpt of the record.
+        featured_media:
+          type: integer
+          description: Media id of the featured image.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources.
+      x-record-count-observed: 24
+    Media:
+      type: object
+      description: A media item record as served by the site REST API.
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the record.
+        date:
+          type: string
+          format: date-time
+          description: Publication date in the site timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: Publication date as GMT.
+        modified:
+          type: string
+          format: date-time
+          description: Last modification date in the site timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: Last modification date as GMT.
+        guid:
+          type: object
+          properties: *id001
+          description: Globally unique identifier for the record.
+        slug:
+          type: string
+          description: Alphanumeric identifier unique to its type.
+        status:
+          type: string
+          description: Publication status.
+        type:
+          type: string
+          description: Content type slug.
+        link:
+          type: string
+          format: uri
+          description: URL of the record on 91squarefeet.com.
+        title:
+          type: object
+          properties: *id001
+          description: Title of the record.
+        content:
+          type: object
+          properties: *id001
+          description: Body content of the record.
+        excerpt:
+          type: object
+          properties: *id001
+          description: Excerpt of the record.
+        featured_media:
+          type: integer
+          description: Media id of the featured image.
+        _links:
+          type: object
+          description: HAL-style link relations to related resources.
+        source_url:
+          type: string
+          format: uri
+          description: Direct URL of the original file.
+        mime_type:
+          type: string
+        media_type:
+          type: string
+        alt_text:
+          type: string
+        media_details:
+          type: object
+          description: Dimensions and generated image sizes.
+      x-record-count-observed: 1105
+    Category: &id002
+      type: object
+      description: A taxonomy term.
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+          description: Number of published records with this term.
+        description:
+          type: string
+        link:
+          type: string
+          format: uri
+        name:
+          type: string
+        slug:
+          type: string
+        taxonomy:
+          type: string
+        _links:
+          type: object
+    Tag: *id002
+    User:
+      type: object
+      description: A public author profile.
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+        description:
+          type: string
+        link:
+          type: string
+          format: uri
+        slug:
+          type: string
+        avatar_urls:
+          type: object
+        _links:
+          type: object
+    Comment:
+      type: object
+      description: A comment on a post.
+      properties:
+        id:
+          type: integer
+        post:
+          type: integer
+        parent:
+          type: integer
+        author_name:
+          type: string
+        date:
+          type: string
+          format: date-time
+        content:
+          type: object
+          properties: *id001
+        link:
+          type: string
+          format: uri
+        status:
+          type: string
+        _links:
+          type: object
+    Portfolio:
+      type: object
+      description: A delivered fit-out project in the 91Squarefeet portfolio. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - featured_media
+      - template
+      - client_category
+      - display_location
+      - mobile_category
+      - class_list
+      - _links
+      x-record-count-observed: 42
+      properties:
+        id: &id003
+          type: integer
+          description: Unique identifier for the record.
+        date: &id004
+          type: string
+          format: date-time
+          description: Publication date in the site timezone.
+        date_gmt: &id005
+          type: string
+          format: date-time
+          description: Publication date as GMT.
+        guid: &id006
+          type: object
+          description: Globally unique identifier for the record.
+          properties:
+            rendered:
+              type: string
+        modified: &id007
+          type: string
+          format: date-time
+          description: Last modification date in the site timezone.
+        modified_gmt: &id008
+          type: string
+          format: date-time
+          description: Last modification date as GMT.
+        slug: &id009
+          type: string
+          description: Alphanumeric identifier unique to its type.
+        status: &id010
+          type: string
+          description: Publication status.
+        type: &id011
+          type: string
+          description: Content type slug.
+        link: &id012
+          type: string
+          format: uri
+          description: URL of the record on 91squarefeet.com.
+        title: &id013
+          type: object
+          description: Title of the record.
+          properties:
+            rendered:
+              type: string
+        template: &id014
+          type: string
+          description: Theme template override.
+        _links: &id015
+          type: object
+          description: HAL-style link relations (self, collection, about, wp:featuredmedia, wp:attachment, wp:term).
+        featured_media: &id016
+          type: integer
+          description: Media id of the featured image; 0 when unset.
+        client_category: &id018
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `client_category` terms.
+        display_location: &id019
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `display_location` terms.
+        mobile_category: &id020
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `mobile_category` terms.
+        class_list: &id017
+          type: array
+          items:
+            type: string
+          description: CSS classes WordPress generates for the record.
+    CaseStudy:
+      type: object
+      description: A published client case study. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - excerpt
+      - featured_media
+      - template
+      - categories
+      - class_list
+      - _links
+      x-record-count-observed: 3
+      properties:
+        id: *id003
+        date: *id004
+        date_gmt: *id005
+        guid: *id006
+        modified: *id007
+        modified_gmt: *id008
+        slug: *id009
+        status: *id010
+        type: *id011
+        link: *id012
+        title: *id013
+        template: *id014
+        _links: *id015
+        featured_media: *id016
+        excerpt: &id021
+          type: object
+          description: Excerpt of the record.
+          properties:
+            rendered:
+              type: string
+        categories: &id022
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `category` terms.
+        class_list: *id017
+    Client:
+      type: object
+      description: A brand 91Squarefeet has delivered projects for. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - template
+      - client_category
+      - display_location
+      - mobile_category
+      - _links
+      x-record-count-observed: 73
+      properties:
+        id: *id003
+        date: *id004
+        date_gmt: *id005
+        guid: *id006
+        modified: *id007
+        modified_gmt: *id008
+        slug: *id009
+        status: *id010
+        type: *id011
+        link: *id012
+        title: *id013
+        template: *id014
+        _links: *id015
+        client_category: *id018
+        display_location: *id019
+        mobile_category: *id020
+    Property:
+      type: object
+      description: A retail or office property record. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - template
+      - property_location
+      - _links
+      x-record-count-observed: 26
+      properties:
+        id: *id003
+        date: *id004
+        date_gmt: *id005
+        guid: *id006
+        modified: *id007
+        modified_gmt: *id008
+        slug: *id009
+        status: *id010
+        type: *id011
+        link: *id012
+        title: *id013
+        template: *id014
+        _links: *id015
+        property_location:
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `property_location` terms.
+    Testimonial:
+      type: object
+      description: A client testimonial. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - featured_media
+      - template
+      - _links
+      x-record-count-observed: 8
+      properties:
+        id: *id003
+        date: *id004
+        date_gmt: *id005
+        guid: *id006
+        modified: *id007
+        modified_gmt: *id008
+        slug: *id009
+        status: *id010
+        type: *id011
+        link: *id012
+        title: *id013
+        template: *id014
+        _links: *id015
+        featured_media: *id016
+    PressRelease:
+      type: object
+      description: A press release or media mention. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - excerpt
+      - featured_media
+      - template
+      - categories
+      - class_list
+      - _links
+      x-record-count-observed: 16
+      properties:
+        id: *id003
+        date: *id004
+        date_gmt: *id005
+        guid: *id006
+        modified: *id007
+        modified_gmt: *id008
+        slug: *id009
+        status: *id010
+        type: *id011
+        link: *id012
+        title: *id013
+        template: *id014
+        _links: *id015
+        featured_media: *id016
+        excerpt: *id021
+        categories: *id022
+        class_list: *id017
+    ClientCategory: *id002
+    DisplayLocation: *id002
+    MobileCategory: *id002
+    PropertyLocation: *id002
+    SearchResult:
+      type: object
+      description: A search hit.
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+        subtype:
+          type: string
+        _links:
+          type: object
+    RestError:
+      type: object
+      description: The WordPress REST error envelope returned on any failure.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_forbidden, rest_no_route, rest_invalid_param.
+          example: rest_forbidden
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Sorry, you are not allowed to do that.
+        data:
+          type: object
+          description: Error detail.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+              example: 401
+            params:
+              type: object
+            details:
+              type: object
+  responses:
+    RestError:
+      description: WordPress REST error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RestError'
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: 'WordPress Application Passwords (HTTP Basic). Required only for write operations and the authenticated
+        namespaces, which are not described in this document. Authorization endpoint: https://91squarefeet.com/wp-admin/authorize-application.php'
+security: []
