@@ -26,6 +26,17 @@ tags:
 - Construction
 - Retail
 - Interior Design
+- Real-Estate
+- Project Management
+- Supply Chain
+- India
+- Content
+- WordPress
+tags_raw:
+- Company
+- Construction
+- Retail
+- Interior Design
 - Real Estate
 - Project Management
 - Supply Chain
@@ -38,63 +49,17 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: 91squarefeet:91squarefeet-content-api
-  name: 91Squarefeet Content API
-  description: >-
-    The read-only WordPress REST API (`wp/v2` namespace) that 91squarefeet.com serves by default, including the
-    custom content types the company registered for its own business content — portfolio (delivered fit-out
-    projects), client, case_study, property, testimonial and press_release — alongside the standard posts,
-    pages, media, users, comments, taxonomy and search collections. Every operation described was probed
-    anonymously and returned HTTP 200; anonymous requests are read-only (the origin answers `Allow: GET` on
-    collections). This is a CMS-exposed content surface, not a documented developer product: 91Squarefeet
-    publishes no developer portal, no API reference and no specification of its own, so the OpenAPI here was
-    derived mechanically from the route index the site itself serves at https://91squarefeet.com/wp-json.
-  humanURL: https://91squarefeet.com/
-  image: https://91squarefeet.com/wp-content/uploads/2024/02/91_400x400.webp
-  baseURL: https://91squarefeet.com/wp-json
-  tags:
-  - Content
-  - WordPress
-  - Portfolio
-  - Retail
-  properties:
-  - type: OpenAPI
-    url: openapi/91squarefeet-content-api-openapi.yml
-  - type: Overlay
-    url: overlays/91squarefeet-content-api-overlay.yaml
-  - type: Authentication
-    url: authentication/91squarefeet-authentication.yml
-  - type: Conventions
-    url: conventions/91squarefeet-conventions.yml
-  - type: ErrorCatalog
-    url: errors/91squarefeet-problem-types.yml
-  - type: DataModel
-    url: data-model/91squarefeet-data-model.yml
-  - type: RateLimits
-    url: rate-limits/91squarefeet-rate-limits.yml
-  - type: Website
-    url: https://91squarefeet.com/
-  x-evidence:
-    discovery_document: https://91squarefeet.com/wp-json
-    http_status: 200
-    routes_declared: 367
-    operations_described: 38
-    fetched: '2026-09-05'
-    note: >-
-      Ownership check — the discovery document self-identifies as name "91Squarefeet", url and home
-      "https://91squarefeet.com", description "Creating Retail Expansion Playbook In India". The surface is
-      served by the registrable domain the company operates and describes the company's own content.
 - aid: 91squarefeet:91squarefeet-mcp-adapter
   name: 91Squarefeet MCP Adapter Endpoint
   description: >-
     A Model Context Protocol endpoint present on the 91squarefeet.com host at the WordPress `mcp` REST
-    namespace, route `mcp/mcp-adapter-default-server`, declared by the site's own /wp-json route index. It is
-    the WordPress MCP Adapter plugin's default server fronting the site's content estate — not a documented
-    91Squarefeet product. It is authentication-gated: an anonymous JSON-RPC `tools/list` returns HTTP 401
-    `rest_forbidden`, so the live tool inventory and per-tool inputSchema cannot be enumerated without
-    credentials. The site advertises no OAuth metadata (/.well-known/oauth-authorization-server and
-    /.well-known/oauth-protected-resource both 404); the only authentication scheme the discovery document
-    declares is WordPress Application Passwords.
+    namespace, route `mcp/mcp-adapter-default-server`, declared by the site's own /wp-json route index.
+    It is the WordPress MCP Adapter plugin's default server fronting the site's content estate — not a
+    documented 91Squarefeet product. It is authentication-gated: an anonymous JSON-RPC `tools/list` returns
+    HTTP 401 `rest_forbidden`, so the live tool inventory and per-tool inputSchema cannot be enumerated
+    without credentials. The site advertises no OAuth metadata (/.well-known/oauth-authorization-server
+    and /.well-known/oauth-protected-resource both 404); the only authentication scheme the discovery
+    document declares is WordPress Application Passwords.
   humanURL: https://91squarefeet.com/
   image: https://91squarefeet.com/wp-content/uploads/2024/02/91_400x400.webp
   baseURL: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
@@ -111,10 +76,475 @@ apis:
     namespace_index: https://91squarefeet.com/wp-json/mcp
     namespace_index_status: 200
     tools_list_status: 401
-    tools_list_response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+    tools_list_response: >-
+      {"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}
     oauth_authorization_server_status: 404
     fetched: '2026-09-05'
+- aid: 91squarefeet:91squarefeet-casestudy-api
+  name: 91Squarefeet Case Study API
+  description: Published client case studies.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - CaseStudy
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-casestudy-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-category-api
+  name: 91Squarefeet Category API
+  description: Post categories.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Category
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-category-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-client-api
+  name: 91Squarefeet Client API
+  description: Brands 91Squarefeet has delivered projects for.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Client
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-client-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-clientcategory-api
+  name: 91Squarefeet Client Category API
+  description: Taxonomy of client categories.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - ClientCategory
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-clientcategory-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-comment-api
+  name: 91Squarefeet Comment API
+  description: Comments on posts.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Comment
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-comment-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-displaylocation-api
+  name: 91Squarefeet Display Location API
+  description: Taxonomy controlling where an item is displayed.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - DisplayLocation
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-displaylocation-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-media-api
+  name: 91Squarefeet Media API
+  description: Media library items — project photography, video and documents.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-media-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-mobilecategory-api
+  name: 91Squarefeet Mobile Category API
+  description: Taxonomy of mobile display categories.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - MobileCategory
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-mobilecategory-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-page-api
+  name: 91Squarefeet Page API
+  description: Site pages (services, about, suppliers, careers).
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Page
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-page-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-portfolio-api
+  name: 91Squarefeet Portfolio API
+  description: Delivered fit-out projects in the 91Squarefeet portfolio.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Portfolio
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-portfolio-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-post-api
+  name: 91Squarefeet Post API
+  description: Blog posts published on 91squarefeet.com.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Post
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-post-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-pressrelease-api
+  name: 91Squarefeet Press Release API
+  description: Press releases and media mentions.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - PressRelease
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-pressrelease-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-property-api
+  name: 91Squarefeet Property API
+  description: Retail/office property listings.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Property
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-property-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-propertylocation-api
+  name: 91Squarefeet Property Location API
+  description: Taxonomy of property locations.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - PropertyLocation
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-propertylocation-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-search-api
+  name: 91Squarefeet Search API
+  description: Cross-content-type search.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-search-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-statuses-api
+  name: 91Squarefeet Statuses API
+  description: Registered post statuses.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Statuses
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-statuses-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-tag-api
+  name: 91Squarefeet Tag API
+  description: Post tags.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Tag
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-tag-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-taxonomies-api
+  name: 91Squarefeet Taxonomies API
+  description: Registered taxonomies on the site.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-taxonomies-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-testimonial-api
+  name: 91Squarefeet Testimonial API
+  description: Client testimonials.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Testimonial
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-testimonial-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-types-api
+  name: 91Squarefeet Types API
+  description: Registered content types on the site.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - Types
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-types-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-user-api
+  name: 91Squarefeet User API
+  description: Public author profiles.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-user-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
 common:
+- type: Overlay
+  url: overlays/91squarefeet-content-api-overlay.yaml
 - type: Website
   url: https://91squarefeet.com/
 - type: Blog
