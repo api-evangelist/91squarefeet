@@ -80,28 +80,6 @@ apis:
       {"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}
     oauth_authorization_server_status: 404
     fetched: '2026-09-05'
-- aid: 91squarefeet:91squarefeet-casestudy-api
-  name: 91Squarefeet Case Study API
-  description: Published client case studies.
-  humanURL: https://91squarefeet.com/
-  baseURL: https://91squarefeet.com/wp-json
-  tags:
-  - CaseStudy
-  properties:
-  - type: OpenAPI
-    url: openapi/91squarefeet-casestudy-api-openapi.yml
-  - type: Authentication
-    url: authentication/91squarefeet-authentication.yml
-  - type: Conventions
-    url: conventions/91squarefeet-conventions.yml
-  - type: ErrorCatalog
-    url: errors/91squarefeet-problem-types.yml
-  - type: DataModel
-    url: data-model/91squarefeet-data-model.yml
-  - type: RateLimits
-    url: rate-limits/91squarefeet-rate-limits.yml
-  - type: Website
-    url: https://91squarefeet.com/
 - aid: 91squarefeet:91squarefeet-category-api
   name: 91Squarefeet Category API
   description: Post categories.
@@ -322,28 +300,6 @@ apis:
     url: rate-limits/91squarefeet-rate-limits.yml
   - type: Website
     url: https://91squarefeet.com/
-- aid: 91squarefeet:91squarefeet-pressrelease-api
-  name: 91Squarefeet Press Release API
-  description: Press releases and media mentions.
-  humanURL: https://91squarefeet.com/
-  baseURL: https://91squarefeet.com/wp-json
-  tags:
-  - PressRelease
-  properties:
-  - type: OpenAPI
-    url: openapi/91squarefeet-pressrelease-api-openapi.yml
-  - type: Authentication
-    url: authentication/91squarefeet-authentication.yml
-  - type: Conventions
-    url: conventions/91squarefeet-conventions.yml
-  - type: ErrorCatalog
-    url: errors/91squarefeet-problem-types.yml
-  - type: DataModel
-    url: data-model/91squarefeet-data-model.yml
-  - type: RateLimits
-    url: rate-limits/91squarefeet-rate-limits.yml
-  - type: Website
-    url: https://91squarefeet.com/
 - aid: 91squarefeet:91squarefeet-property-api
   name: 91Squarefeet Property API
   description: Retail/office property listings.
@@ -530,6 +486,50 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/91squarefeet-user-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-case-study-api
+  name: 91Squarefeet Case Study API
+  description: Published client case studies.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  tags:
+  - Case Study
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-case-study-api-openapi.yml
+  - type: Authentication
+    url: authentication/91squarefeet-authentication.yml
+  - type: Conventions
+    url: conventions/91squarefeet-conventions.yml
+  - type: ErrorCatalog
+    url: errors/91squarefeet-problem-types.yml
+  - type: DataModel
+    url: data-model/91squarefeet-data-model.yml
+  - type: RateLimits
+    url: rate-limits/91squarefeet-rate-limits.yml
+  - type: Website
+    url: https://91squarefeet.com/
+- aid: 91squarefeet:91squarefeet-press-release-api
+  name: 91Squarefeet Press Release API
+  description: Press releases and media mentions.
+  humanURL: https://91squarefeet.com/
+  baseURL: https://91squarefeet.com/wp-json/mcp/mcp-adapter-default-server
+  tags:
+  - Press Release
+  properties:
+  - type: OpenAPI
+    url: openapi/91squarefeet-press-release-api-openapi.yml
   - type: Authentication
     url: authentication/91squarefeet-authentication.yml
   - type: Conventions
