@@ -108,6 +108,8 @@ apis:
   humanURL: https://91squarefeet.com/
   baseURL: https://91squarefeet.com/wp-json
   tags:
+  - Clients
+  tags_raw:
   - Client
   properties:
   - type: OpenAPI
@@ -283,7 +285,8 @@ apis:
   description: Blog posts published on 91squarefeet.com.
   humanURL: https://91squarefeet.com/
   baseURL: https://91squarefeet.com/wp-json
-  tags:
+  tags: []
+  tags_raw:
   - Post
   properties:
   - type: OpenAPI
@@ -372,6 +375,8 @@ apis:
   humanURL: https://91squarefeet.com/
   baseURL: https://91squarefeet.com/wp-json
   tags:
+  - Status
+  tags_raw:
   - Statuses
   properties:
   - type: OpenAPI
@@ -416,6 +421,8 @@ apis:
   humanURL: https://91squarefeet.com/
   baseURL: https://91squarefeet.com/wp-json
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
