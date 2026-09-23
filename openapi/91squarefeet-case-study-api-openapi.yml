@@ -1,0 +1,418 @@
+openapi: 3.2.0
+info:
+  title: 91Squarefeet Content Case Study API
+  version: wp/v2
+  description: Read-only content API for 91squarefeet.com.
+  contact:
+    name: 91Squarefeet
+    url: https://91squarefeet.com/contact-us/
+  x-generated-from: https://91squarefeet.com/wp-json (WordPress REST route index)
+  x-generated-by: API Evangelist enrichment pipeline — derived, not published by the provider
+  x-observed:
+    probed: '2026-09-05'
+    note: Response field sets and record counts recorded from live anonymous GETs against https://91squarefeet.com/wp-json/wp/v2/*; X-WP-Total supplied the counts.
+servers:
+- url: https://91squarefeet.com/wp-json
+  description: WordPress REST API root on the production site host. Verified 2026-09-05 (HTTP 200, application/json).
+security: []
+tags:
+- name: Case Study
+  description: Published client case studies.
+paths:
+  /wp/v2/case_study:
+    get:
+      operationId: listCaseStudy
+      summary: List CaseStudy records
+      description: Published client case studies. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Case Study
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: categories
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+      - name: categories_exclude
+        in: query
+        required: false
+        schema:
+          type: object
+        description: Limit result set to items except those with specific terms assigned in the categories taxonomy.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - any
+          default: publish
+        description: Limit result set to posts assigned one or more statuses.
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+        description: Limit result set based on relationship between multiple taxonomies.
+      responses:
+        '200':
+          description: A page of CaseStudy records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseStudy'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/case_study/{id}:
+    get:
+      operationId: getCaseStudy
+      summary: Retrieve one CaseStudy record
+      description: Retrieve a single CaseStudy record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Case Study
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the CaseStudy record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      responses:
+        '200':
+          description: The requested CaseStudy record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseStudy'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+components:
+  responses:
+    RestError:
+      description: WordPress REST error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RestError'
+  schemas:
+    CaseStudy:
+      type: object
+      description: A published client case study. Field set observed on a live anonymous GET.
+      x-observed-fields:
+      - id
+      - date
+      - date_gmt
+      - guid
+      - modified
+      - modified_gmt
+      - slug
+      - status
+      - type
+      - link
+      - title
+      - excerpt
+      - featured_media
+      - template
+      - categories
+      - class_list
+      - _links
+      x-record-count-observed: 3
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the record.
+        date:
+          type: string
+          format: date-time
+          description: Publication date in the site timezone.
+        date_gmt:
+          type: string
+          format: date-time
+          description: Publication date as GMT.
+        guid:
+          type: object
+          description: Globally unique identifier for the record.
+          properties:
+            rendered:
+              type: string
+        modified:
+          type: string
+          format: date-time
+          description: Last modification date in the site timezone.
+        modified_gmt:
+          type: string
+          format: date-time
+          description: Last modification date as GMT.
+        slug:
+          type: string
+          description: Alphanumeric identifier unique to its type.
+        status:
+          type: string
+          description: Publication status.
+        type:
+          type: string
+          description: Content type slug.
+        link:
+          type: string
+          format: uri
+          description: URL of the record on 91squarefeet.com.
+        title:
+          type: object
+          description: Title of the record.
+          properties:
+            rendered:
+              type: string
+        template:
+          type: string
+          description: Theme template override.
+        _links:
+          type: object
+          description: HAL-style link relations (self, collection, about, wp:featuredmedia, wp:attachment, wp:term).
+        featured_media:
+          type: integer
+          description: Media id of the featured image; 0 when unset.
+        excerpt:
+          type: object
+          description: Excerpt of the record.
+          properties:
+            rendered:
+              type: string
+        categories:
+          type: array
+          items:
+            type: integer
+          description: Ids of assigned `category` terms.
+        class_list:
+          type: array
+          items:
+            type: string
+          description: CSS classes WordPress generates for the record.
+    RestError:
+      type: object
+      description: The WordPress REST error envelope returned on any failure.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_forbidden, rest_no_route, rest_invalid_param.
+          example: rest_forbidden
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Sorry, you are not allowed to do that.
+        data:
+          type: object
+          description: Error detail.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+              example: 401
+            params:
+              type: object
+            details:
+              type: object
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: 'WordPress Application Passwords (HTTP Basic). Required only for write operations and the authenticated namespaces, which are not described in this document. Authorization endpoint: https://91squarefeet.com/wp-admin/authorize-application.php'

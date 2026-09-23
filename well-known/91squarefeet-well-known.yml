@@ -1,12 +1,18 @@
-generated: '2026-09-05'
+generated: '2026-09-19'
 method: probed
 source: live probes of /.well-known/* on every host this record knows
-note: >-
-  Every named path was probed on both the registrable domain and its www alias (www.91squarefeet.com and
-  91sqft.com both 301 to the apex). All returned HTTP 404 with the site's WordPress 404 HTML page — no
-  well-known document is served. NO WellKnown or SecurityTxt pointer is emitted in apis.yml, because this
-  file records an absence, not a presence. There are no other hosts to probe: api., docs., developer. and
-  app. subdomains of 91squarefeet.com do not resolve, and the single OpenAPI servers[] host is the apex.
+note: 'Every named path was probed on both the registrable domain and its www alias (www.91squarefeet.com
+  and 91sqft.com both 301 to the apex). All returned HTTP 404 with the site''s WordPress 404 HTML page
+  — no well-known document is served. NO WellKnown or SecurityTxt pointer is emitted in apis.yml, because
+  this file records an absence, not a presence. There are no other hosts to probe: api., docs., developer.
+  and app. subdomains of 91squarefeet.com do not resolve, and the single OpenAPI servers[] host is the
+  apex.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
 - host: 91squarefeet.com
   documents:
@@ -34,6 +40,15 @@ hosts:
   - path: /.well-known/agent.json
     status: 404
     file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: 91squarefeet-91squarefeet-oauth-protected-resource.json
+    bytes: 193
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: 91squarefeet-91squarefeet-oauth-authorization-server.json
+    bytes: 555
+  path_echo_control: passed
 - host: www.91squarefeet.com
   documents:
   - path: /.well-known/security.txt
@@ -56,3 +71,15 @@ unresolved_hosts:
   result: NXDOMAIN
 served_documents_found: 0
 checked: '2026-09-05'
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://91squarefeet.com
+    path: /.well-known/oauth-protected-resource
+    file: 91squarefeet-91squarefeet-oauth-protected-resource.json
+  - host: https://91squarefeet.com
+    path: /.well-known/oauth-authorization-server
+    file: 91squarefeet-91squarefeet-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host

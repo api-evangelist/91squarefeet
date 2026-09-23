@@ -1,0 +1,63 @@
+{
+  "provider": "91squarefeet",
+  "sources": [
+    "_original/91squarefeet-content-api-openapi.yml"
+  ],
+  "outputs": [
+    "91squarefeet-casestudy-api-openapi.yml",
+    "91squarefeet-category-api-openapi.yml",
+    "91squarefeet-client-api-openapi.yml",
+    "91squarefeet-clientcategory-api-openapi.yml",
+    "91squarefeet-comment-api-openapi.yml",
+    "91squarefeet-displaylocation-api-openapi.yml",
+    "91squarefeet-media-api-openapi.yml",
+    "91squarefeet-mobilecategory-api-openapi.yml",
+    "91squarefeet-page-api-openapi.yml",
+    "91squarefeet-portfolio-api-openapi.yml",
+    "91squarefeet-post-api-openapi.yml",
+    "91squarefeet-pressrelease-api-openapi.yml",
+    "91squarefeet-property-api-openapi.yml",
+    "91squarefeet-propertylocation-api-openapi.yml",
+    "91squarefeet-search-api-openapi.yml",
+    "91squarefeet-statuses-api-openapi.yml",
+    "91squarefeet-tag-api-openapi.yml",
+    "91squarefeet-taxonomies-api-openapi.yml",
+    "91squarefeet-testimonial-api-openapi.yml",
+    "91squarefeet-types-api-openapi.yml",
+    "91squarefeet-user-api-openapi.yml"
+  ],
+  "archived": [
+    "deleted 2 superseded output(s) from the previous generation"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "91squarefeet-content-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: 91squarefeet-case-study-api-openapi.yml, 91squarefeet-press-release-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 22 total)"
+  ],
+  "skipped": [
+    "91squarefeet-case-study-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-category-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-client-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-clientcategory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-comment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-displaylocation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-mobilecategory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-page-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-portfolio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-post-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-press-release-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-property-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-propertylocation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-statuses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-tag-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-taxonomies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-testimonial-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "91squarefeet-user-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

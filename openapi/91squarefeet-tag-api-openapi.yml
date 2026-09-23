@@ -1,0 +1,258 @@
+openapi: 3.2.0
+info:
+  title: 91Squarefeet Content Tag API
+  version: wp/v2
+  description: Read-only content API for 91squarefeet.com.
+  contact:
+    name: 91Squarefeet
+    url: https://91squarefeet.com/contact-us/
+  x-generated-from: https://91squarefeet.com/wp-json (WordPress REST route index)
+  x-generated-by: API Evangelist enrichment pipeline — derived, not published by the provider
+  x-observed:
+    probed: '2026-09-05'
+    note: Response field sets and record counts recorded from live anonymous GETs against https://91squarefeet.com/wp-json/wp/v2/*; X-WP-Total supplied the counts.
+servers:
+- url: https://91squarefeet.com/wp-json
+  description: WordPress REST API root on the production site host. Verified 2026-09-05 (HTTP 200, application/json).
+security: []
+tags:
+- name: Tag
+  description: Post tags.
+paths:
+  /wp/v2/tags:
+    get:
+      operationId: listTags
+      summary: List Tag records
+      description: Post tags. Read-only, unauthenticated. Paginated with page/per_page; totals are returned in the X-WP-Total and X-WP-TotalPages response headers.
+      tags:
+      - Tag
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: A page of Tag records.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+        '400':
+          $ref: '#/components/responses/RestError'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTag
+      summary: Retrieve one Tag record
+      description: Retrieve a single Tag record by its numeric id. Read-only, unauthenticated.
+      tags:
+      - Tag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique identifier for the Tag record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: The requested Tag record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '401':
+          $ref: '#/components/responses/RestError'
+        '404':
+          $ref: '#/components/responses/RestError'
+components:
+  responses:
+    RestError:
+      description: WordPress REST error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RestError'
+  schemas:
+    RestError:
+      type: object
+      description: The WordPress REST error envelope returned on any failure.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_forbidden, rest_no_route, rest_invalid_param.
+          example: rest_forbidden
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Sorry, you are not allowed to do that.
+        data:
+          type: object
+          description: Error detail.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+              example: 401
+            params:
+              type: object
+            details:
+              type: object
+    Tag:
+      type: object
+      description: A taxonomy term.
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+          description: Number of published records with this term.
+        description:
+          type: string
+        link:
+          type: string
+          format: uri
+        name:
+          type: string
+        slug:
+          type: string
+        taxonomy:
+          type: string
+        _links:
+          type: object
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: 'WordPress Application Passwords (HTTP Basic). Required only for write operations and the authenticated namespaces, which are not described in this document. Authorization endpoint: https://91squarefeet.com/wp-admin/authorize-application.php'
