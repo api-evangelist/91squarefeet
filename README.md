@@ -117,7 +117,7 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 16.2** — emerging · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 15.8** — emerging · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
@@ -126,9 +126,9 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Contract governance | 4.5 |
 | Operational transparency | 0.0 |
 | Developer ergonomics | 30.4 |
-| Access clarity | 10.5 |
+| Access clarity | 12.8 |
 
-**Agent readiness 22.8** — agent-aware
+**Agent readiness 26.6** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -149,12 +149,16 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Dry Run Mode | — |
 | Delegated Identity | served (partial credit) |
 | Protected Resource Metadata | verified |
-| Dynamic Client Registration | — |
+| Dynamic Client Registration | yes |
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | na |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 14.7** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/91squarefeet/](https://apis.io/providers/91squarefeet/).
 
